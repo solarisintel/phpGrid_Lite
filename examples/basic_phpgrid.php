@@ -12,6 +12,11 @@ require_once("../conf.php");
 <?php
 $dg = new C_DataGrid("SELECT * FROM Orders", "orderNumber", "Orders");
 
+$dg -> set_dimension(1500, 600); 
+
+$dg -> set_col_align("comments", "left");  // left, center, right
+$dg -> set_col_width("comments", "1200");
+
 $dg -> display();
 ?>
 

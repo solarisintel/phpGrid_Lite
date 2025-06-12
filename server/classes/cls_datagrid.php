@@ -59,6 +59,7 @@ class C_DataGrid
 	private $_A80F62E0D0890FC5C6232BE28E3D5B48;
 	private $_F0A34FC9BB983B79191E27F561AF4CFD;
 	private $align;
+	private $colWidth;
 	public $_F0135D302285919E33CA08ACFA0822E5;
 	public $_9285D3447B999C7A1BE3D673C80D0C94;
 	public $debug;
@@ -142,6 +143,7 @@ class C_DataGrid
 		$this->_B82F8943D3B270A54DD86991EF543493 = null;
 		$this->_485FB4C99DD632A980C101519C106BEF = null;
 		$this->align = array();
+		$this->colWidth = array();
 		$_2E73F1CB0191197774B64693B19E0E81 = strtotime(date("Y-m-d"));
 		$_F109AAFB832AD2DEAC8497DFA46629C7 = strtotime("2014-12-22");
 		if ($_F109AAFB832AD2DEAC8497DFA46629C7 < $_2E73F1CB0191197774B64693B19E0E81 && 0)
@@ -218,6 +220,9 @@ class C_DataGrid
 	                // added by solarisintel
 			if (isset($this->align[$fieldName])) {
 			   $cols['align'] = $this->align[$fieldName];
+			}   
+			if (isset($this->colWidth[$fieldName])) {
+			   $cols['width'] = $this->colWidth[$fieldName];
 			}   
 
 			$cols['index'] = $fieldName;
@@ -991,6 +996,10 @@ class C_DataGrid
 	public function set_col_align ($fieldName, $arg = "left")
 	{
 		$this->align[$fieldName] = $arg;
+	}
+	public function set_col_width ($fieldName, $arg = "200")
+	{
+		$this->colWidth[$fieldName] = $arg;
 	}
 	public function set_col_dynalink ($fieldName, 
 	$baseLinkUrl = "", $idName = "id", $addParam = "", $target = "_new")
