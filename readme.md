@@ -1,7 +1,7 @@
 ## System Requirements
 
 phpGrid is operating system independent. It works on both Windows and Linux as long as the following components are installed:
-- PHP 5.3 or later
+- PHP 7.3 or later
 - Apache, Tomcat, or Microsoft IIS web server
 - Major relational database such as MySQL/MariaDB, PostgreSQL, SQL Server, Oracle, DB2, SQL Lite, Access etc.
 
