@@ -79,20 +79,20 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 			echo '<tr style="background-color:black;color:white">';
 			for ($j = 0; $j < $db->num_fields($rs); $j ++)
 			{
-				$_84F8B7DFD0844468481F41C56E82DAB5 = $db->field_name($rs, $j);
-				if (! in_array($_84F8B7DFD0844468481F41C56E82DAB5, 
+				$fieldName = $db->field_name($rs, $j);
+				if (! in_array($fieldName, 
 				$dg->_053D96FF84E696405652B917C760E4B4()))
 				{
 					if (isset(
-					$_CF0A584CDCFB7C5865C3C6807292530D[$_84F8B7DFD0844468481F41C56E82DAB5]))
+					$_CF0A584CDCFB7C5865C3C6807292530D[$fieldName]))
 					{
 						echo '<th>' .
-						 $_CF0A584CDCFB7C5865C3C6807292530D[$_84F8B7DFD0844468481F41C56E82DAB5] .
+						 $_CF0A584CDCFB7C5865C3C6807292530D[$fieldName] .
 						 '</th>';
 					}
 					else
 					{
-						echo '<th>' . $_84F8B7DFD0844468481F41C56E82DAB5 .
+						echo '<th>' . $fieldName .
 						 '</th>';
 					}
 				}
@@ -106,11 +106,11 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 			echo '<tr>';
 			for ($j = 0; $j < $db->num_fields($result); $j ++)
 			{
-				$_84F8B7DFD0844468481F41C56E82DAB5 = $db->field_name($result, 
+				$fieldName = $db->field_name($result, 
 				$j);
-				if (! in_array($_84F8B7DFD0844468481F41C56E82DAB5, 
+				if (! in_array($fieldName, 
 				$dg->_053D96FF84E696405652B917C760E4B4())) echo '<td>' .
-				 $row[$_84F8B7DFD0844468481F41C56E82DAB5] . '&nbsp;</td>';
+				 $row[$fieldName] . '&nbsp;</td>';
 			}
 			echo '</tr>' . "\n";
 		}
@@ -185,17 +185,17 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 			echo '<Row>';
 			for ($j = 0; $j < $_F9EB1EE7430F1E455EDA156BED19DD68; $j ++)
 			{
-				$_84F8B7DFD0844468481F41C56E82DAB5 = $db->field_name($rs, $j);
-				if (! in_array($_84F8B7DFD0844468481F41C56E82DAB5, 
+				$fieldName = $db->field_name($rs, $j);
+				if (! in_array($fieldName, 
 				$dg->_053D96FF84E696405652B917C760E4B4()))
 				{
 					if (isset(
-					$_CF0A584CDCFB7C5865C3C6807292530D[$_84F8B7DFD0844468481F41C56E82DAB5]))
+					$_CF0A584CDCFB7C5865C3C6807292530D[$fieldName]))
 					{
 						echo '<Cell ss:StyleID="sHeader"><Data ss:Type="String">' .
 						 str_replace('>', '&gt;', 
 						str_replace('<', '&lt;', 
-						$_CF0A584CDCFB7C5865C3C6807292530D[$_84F8B7DFD0844468481F41C56E82DAB5])) .
+						$_CF0A584CDCFB7C5865C3C6807292530D[$fieldName])) .
 						 '</Data></Cell>';
 					}
 					else
@@ -203,7 +203,7 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 						echo '<Cell ss:StyleID="sHeader"><Data ss:Type="String">' .
 						 str_replace('>', '&gt;', 
 						str_replace('<', '&lt;', 
-						$_84F8B7DFD0844468481F41C56E82DAB5)) . '</Data></Cell>';
+						$fieldName)) . '</Data></Cell>';
 					}
 				}
 			}
@@ -215,40 +215,40 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 			echo '<Row>';
 			for ($j = 0; $j < $_F9EB1EE7430F1E455EDA156BED19DD68; $j ++)
 			{
-				$_84F8B7DFD0844468481F41C56E82DAB5 = $db->field_name($result, 
+				$fieldName = $db->field_name($result, 
 				$j);
-				if (! in_array($_84F8B7DFD0844468481F41C56E82DAB5, 
+				if (! in_array($fieldName, 
 				$dg->_053D96FF84E696405652B917C760E4B4()))
 				{
 					$_F263E5B84D6C79F0B108E8DD213FE515 = $db->_39ADD6B4099DB99B597E2C89CADDDFB3(
 					$result, 
 					$db->_4CF52E24237F544BE9BC663B4DF0F9D7($result, 
-					$_84F8B7DFD0844468481F41C56E82DAB5));
+					$fieldName));
 					switch ($_F263E5B84D6C79F0B108E8DD213FE515)
 					{
 						case 'D':
 							echo '<Cell ss:StyleID="sDate"><Data ss:Type="String">' .
 							 str_replace('>', '&gt;', 
 							str_replace('<', '&lt;', 
-							$row[$_84F8B7DFD0844468481F41C56E82DAB5])) .
+							$row[$fieldName])) .
 							 '</Data></Cell>';
 							break;
 						case 'I':
 						case 'R':
 							echo '<Cell ss:StyleID="sNumber"><Data ss:Type="Number">' .
-							 $row[$_84F8B7DFD0844468481F41C56E82DAB5] .
+							 $row[$fieldName] .
 							 '</Data></Cell>';
 							break;
 						case 'N':
 							echo '<Cell ss:StyleID="sDecimal"><Data ss:Type="Number">' .
-							 $row[$_84F8B7DFD0844468481F41C56E82DAB5] .
+							 $row[$fieldName] .
 							 '</Data></Cell>';
 							break;
 						default:
 							echo '<Cell><Data ss:Type="String">' .
 							 str_replace('>', '&gt;', 
 							str_replace('<', '&lt;', 
-							$row[$_84F8B7DFD0844468481F41C56E82DAB5])) .
+							$row[$fieldName])) .
 							 '</Data></Cell>';
 					}
 				}

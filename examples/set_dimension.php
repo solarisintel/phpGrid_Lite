@@ -31,7 +31,7 @@ $dg -> enable_export('EXCEL');
 $dg -> enable_search(true);
 
 // set height and weight of datagrid
-$dg -> set_dimension(800, 600); 
+$dg -> set_dimension(1200, 400); 
 
 $dg -> display();
 ?>

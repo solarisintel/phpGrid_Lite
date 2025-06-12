@@ -59,8 +59,8 @@ switch ($_FC6333F2296503D4603EEA34F68C0B57) {
 		while ( $row = $db->_D9EBE5634F9E374610F5696C28C39F90 ( $result ) ) {
 			$data .= "<row id='" . $row [$dg->_778A589CB1CD4D5258CBEBE497B9ECAB ()] . "'>";
 			for($i = 0; $i < $db->num_fields ( $result ); $i ++) {
-				$_84F8B7DFD0844468481F41C56E82DAB5 = $db->field_name ( $result, $i );
-				$data .= "<cell>" . $row [$_84F8B7DFD0844468481F41C56E82DAB5] . "</cell>";
+				$fieldName = $db->field_name ( $result, $i );
+				$data .= "<cell>" . $row [$fieldName] . "</cell>";
 			}
 			$data .= "</row>";
 		}
@@ -79,8 +79,8 @@ switch ($_FC6333F2296503D4603EEA34F68C0B57) {
 			unset ( $data );
 			$_3A68A0CB401F20A978557A658D223497->rows [$i] ['id'] = $row [$dg->_778A589CB1CD4D5258CBEBE497B9ECAB ()];
 			for($j = 0; $j < $db->num_fields ( $result ); $j ++) {
-				$_84F8B7DFD0844468481F41C56E82DAB5 = $db->field_name ( $result, $j );
-				$data [] = $row [$_84F8B7DFD0844468481F41C56E82DAB5];
+				$fieldName = $db->field_name ( $result, $j );
+				$data [] = $row [$fieldName];
 			}
 			$_3A68A0CB401F20A978557A658D223497->rows [$i] ['cell'] = $data;
 			$i ++;

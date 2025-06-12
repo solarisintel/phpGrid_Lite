@@ -4109,7 +4109,8 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 			default:
 				$class = $db; break;
 		}
-		
+
+                $db = 'postgres';  // debug by solarisintel
 		$file = ADODB_DIR."/drivers/adodb-".$db.".inc.php";
 		@include_once($file);
 		$ADODB_LASTDB = $class;

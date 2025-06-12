@@ -49,7 +49,7 @@ class C_DataGrid
 	private $_96960C9C37D3D72A3B4FE1E6C10D8A09;
 	private $_6CE32431FD51CCA9C9FCADF5F28E74FD;
 	private $_0809869D6A1EEF2DEC1395F670A46E20;
-	private $_1188C8FE20E21178C2AE2769ECC33A17;
+	private $fieldCount;
 	private $_53CF29BAE246EA04F7E185D744873723;
 	private $_E8844A2656AEE4F30B91D8B12F73F2DC;
 	private $_28A2F4B167A10BE04256CE57077A544D;
@@ -58,6 +58,7 @@ class C_DataGrid
 	private $_0E39904D7EB3B3A8DB174012714D2C0D;
 	private $_A80F62E0D0890FC5C6232BE28E3D5B48;
 	private $_F0A34FC9BB983B79191E27F561AF4CFD;
+	private $align;
 	public $_F0135D302285919E33CA08ACFA0822E5;
 	public $_9285D3447B999C7A1BE3D673C80D0C94;
 	public $debug;
@@ -69,18 +70,18 @@ class C_DataGrid
 	public function __construct ($sql, $_155E326C545667DA4ADBDF4713536CE7 = 'id', 
 	$_82AE25C96B23C3058D7199BA4BFA2713 = '', $extra_params = '')
 	{
-		$this->db = new C_DataBase(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, 
-		DB_NAME, DB_TYPE);
+		$this->db = new C_DataBase(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_TYPE);
 		$this->sql = $sql;
 		$this->_155E326C545667DA4ADBDF4713536CE7 = $_155E326C545667DA4ADBDF4713536CE7;
 		$this->_00F02F1C04FD0E38007FE5C0ECE23227 = null;
 		$this->_82AE25C96B23C3058D7199BA4BFA2713 = $_82AE25C96B23C3058D7199BA4BFA2713;
-		$this->db->_5D7405D6C5BF206648C6B627A5415C96("set names '".CharSetNames."'");
+		if (DB_TYPE == 'mysqli') {
+		   $this->db->_5D7405D6C5BF206648C6B627A5415C96("set names '".CharSetNames."'");
+		}
 		$this->_0809869D6A1EEF2DEC1395F670A46E20 = $this->db->_5FBCF77932543542C23E5582BE5F980B(
 		$this->db->_5D7405D6C5BF206648C6B627A5415C96($sql));
 		$results = $this->db->_8D00AB5DB4831EFB77B1B8B18367B560($sql, 1, 1);
-		$this->_1188C8FE20E21178C2AE2769ECC33A17 = $this->db->num_fields(
-		$results);
+		$this->fieldCount = $this->db->num_fields($results);
 		$this->_53C4CD9B20845EB7C62DA55ECCCE5536 = array();
 		$this->_CF0A584CDCFB7C5865C3C6807292530D = array();
 		$this->_CFDCEF9F776D5B87B3AF7C273DB2A716 = array();
@@ -125,14 +126,14 @@ class C_DataGrid
 		$this->_6CE32431FD51CCA9C9FCADF5F28E74FD = array( 'is_resizable' => false , 
 		'min_width' => 300 , 'min_height' => 100 );
 		$this->_0809869D6A1EEF2DEC1395F670A46E20 = 0;
-		$this->_1188C8FE20E21178C2AE2769ECC33A17 = 0;
+		$this->fieldCount = 0;
 		$this->_E8844A2656AEE4F30B91D8B12F73F2DC = 'phpGrid Professional Demo(v4.0) jgGrid(v3.6.4) jQuery(v1.3.2) jQuery UI(1.7.3)';
 		$this->_0E39904D7EB3B3A8DB174012714D2C0D = null;
 		$this->_A80F62E0D0890FC5C6232BE28E3D5B48 = array();
 		$this->_F0A34FC9BB983B79191E27F561AF4CFD = 'start';
 		$this->_F0135D302285919E33CA08ACFA0822E5 = null;
 		$this->_9285D3447B999C7A1BE3D673C80D0C94 = ABS_PATH . '/export.php?gn=' .
-		 $this->_B5648762BE4E1F7296F7B5F857952DFA;
+		$this->_B5648762BE4E1F7296F7B5F857952DFA;
 		$this->_28A2F4B167A10BE04256CE57077A544D = 'NONE';
 		$this->_559F681046C0C6F6E72488A23A5F0AD5 = null;
 		$this->_C3122687D6F8F4182585B45E0556A196 = false;
@@ -140,6 +141,7 @@ class C_DataGrid
 		$this->_7298BD9DC41501DEF80CAC2AAE485FA2 = '';
 		$this->_B82F8943D3B270A54DD86991EF543493 = null;
 		$this->_485FB4C99DD632A980C101519C106BEF = null;
+		$this->align = array();
 		$_2E73F1CB0191197774B64693B19E0E81 = strtotime(date("Y-m-d"));
 		$_F109AAFB832AD2DEAC8497DFA46629C7 = strtotime("2014-12-22");
 		if ($_F109AAFB832AD2DEAC8497DFA46629C7 < $_2E73F1CB0191197774B64693B19E0E81 && 0)
@@ -161,8 +163,7 @@ class C_DataGrid
 		$this->sql));
 		$results = $_BA14039F0E958B2349059AB1B041943B->_8D00AB5DB4831EFB77B1B8B18367B560(
 		$this->sql, 1, 1);
-		$this->_1188C8FE20E21178C2AE2769ECC33A17 = $_BA14039F0E958B2349059AB1B041943B->num_fields(
-		$results);
+		$this->fieldCount = $_BA14039F0E958B2349059AB1B041943B->num_fields($results);
 		$this->_67BACCE5E5580D4DF8F07E46F4F129B9 = $this->_2323F5EC6DD5911A4FE2E40173B11BF3(
 		$results);
 		$this->set_colNames($results);
@@ -172,7 +173,7 @@ class C_DataGrid
 	{
 		$_BA14039F0E958B2349059AB1B041943B = $this->db;
 		$_67BACCE5E5580D4DF8F07E46F4F129B9 = array();
-		for ($i = 0; $i < $this->_1188C8FE20E21178C2AE2769ECC33A17; $i ++)
+		for ($i = 0; $i < $this->fieldCount; $i ++)
 		{
 			$_789DE33D53262243E6601876D24EE696 = $_BA14039F0E958B2349059AB1B041943B->field_name(
 			$results, $i);
@@ -184,15 +185,15 @@ class C_DataGrid
 	{
 		$_BA14039F0E958B2349059AB1B041943B = $this->db;
 		$col_names = array();
-		for ($i = 0; $i < $this->_1188C8FE20E21178C2AE2769ECC33A17; $i ++)
+		for ($i = 0; $i < $this->fieldCount; $i ++)
 		{
-			$_84F8B7DFD0844468481F41C56E82DAB5 = $_BA14039F0E958B2349059AB1B041943B->field_name(
+			$fieldName = $_BA14039F0E958B2349059AB1B041943B->field_name(
 			$results, $i);
 			if (isset(
-			$this->_CF0A584CDCFB7C5865C3C6807292530D[$_84F8B7DFD0844468481F41C56E82DAB5]))
-				$col_names[] = $this->_CF0A584CDCFB7C5865C3C6807292530D[$_84F8B7DFD0844468481F41C56E82DAB5];
+			$this->_CF0A584CDCFB7C5865C3C6807292530D[$fieldName]))
+				$col_names[] = $this->_CF0A584CDCFB7C5865C3C6807292530D[$fieldName];
 			else
-				$col_names[] = $_84F8B7DFD0844468481F41C56E82DAB5;
+				$col_names[] = $fieldName;
 		}
 		$this->_66A1D44D8EBB8CCB544158AB9A7882C7 = $col_names;
 		return $col_names;
@@ -201,25 +202,29 @@ class C_DataGrid
 	{
 		return $this->_66A1D44D8EBB8CCB544158AB9A7882C7;
 	}
+
+	// see http://www.trirand.com/jqgridwiki/doku.php?id=wiki:colmodel_options
 	public function set_colModel ($results)
 	{
 		$_BA14039F0E958B2349059AB1B041943B = $this->db;
 		$_2A4E8023EF0D47D22093E05614BF3DBF = array();
-		for ($i = 0; $i < $this->_1188C8FE20E21178C2AE2769ECC33A17; $i ++)
+		for ($i = 0; $i < $this->fieldCount; $i ++)
 		{
-			$_84F8B7DFD0844468481F41C56E82DAB5 = $_BA14039F0E958B2349059AB1B041943B->field_name(
-			$results, $i);
-			$_3F200CC61D0ED71A411120D72C51A4AD = $_BA14039F0E958B2349059AB1B041943B->_39ADD6B4099DB99B597E2C89CADDDFB3(
-			$results, $i);
+			$fieldName = $_BA14039F0E958B2349059AB1B041943B->field_name($results, $i);
+			$_3F200CC61D0ED71A411120D72C51A4AD = $_BA14039F0E958B2349059AB1B041943B->_39ADD6B4099DB99B597E2C89CADDDFB3($results, $i);
 			$cols = array();
-			$cols['name'] = $_84F8B7DFD0844468481F41C56E82DAB5;
-			$cols['index'] = $_84F8B7DFD0844468481F41C56E82DAB5;
-			$cols['hidden'] = isset(
-			$this->_53C4CD9B20845EB7C62DA55ECCCE5536[$_84F8B7DFD0844468481F41C56E82DAB5]);
-			if (isset(
-			$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]))
+			$cols['name'] = $fieldName;
+
+	                // added by solarisintel
+			if (isset($this->align[$fieldName])) {
+			   $cols['align'] = $this->align[$fieldName];
+			}   
+
+			$cols['index'] = $fieldName;
+			$cols['hidden'] = isset($this->_53C4CD9B20845EB7C62DA55ECCCE5536[$fieldName]);
+			if (isset($this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]))
 			{
-				$cols['edittype'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['type'];
+				$cols['edittype'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['type'];
 			}
 			else
 			{
@@ -238,38 +243,38 @@ class C_DataGrid
 			$editoptions = array();
 			if (($_3F200CC61D0ED71A411120D72C51A4AD == 'D' ||
 			 $_3F200CC61D0ED71A411120D72C51A4AD == 'T') &&
-			 ! in_array($_84F8B7DFD0844468481F41C56E82DAB5, 
+			 ! in_array($fieldName, 
 			$this->_CFDCEF9F776D5B87B3AF7C273DB2A716))
 			{
 				$editoptions['dataInit'] = '###function(el){$(el).datepicker({dateFormat:\'yy-mm-dd\'});}###';
 			}
 			elseif (isset(
-			$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]))
+			$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]))
 			{
-				if ($this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['value'] !=
+				if ($this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['value'] !=
 				 null)
 				{
-					$editoptions['value'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['value'];
+					$editoptions['value'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['value'];
 				}
-				$editoptions['multiple'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['multiple'];
-				if ($this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['dataUrl'] !=
+				$editoptions['multiple'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['multiple'];
+				if ($this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['dataUrl'] !=
 				 null)
 				{
-					$editoptions['dataUrl'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['dataUrl'];
+					$editoptions['dataUrl'] = $this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['dataUrl'];
 				}
 			}
 			$editrules = array();
 			$editrules['edithidden'] = (isset(
-			$this->_53C4CD9B20845EB7C62DA55ECCCE5536[$_84F8B7DFD0844468481F41C56E82DAB5]['edithidden']) &&
-			 $this->_53C4CD9B20845EB7C62DA55ECCCE5536[$_84F8B7DFD0844468481F41C56E82DAB5]['edithidden'] ==
+			$this->_53C4CD9B20845EB7C62DA55ECCCE5536[$fieldName]['edithidden']) &&
+			 $this->_53C4CD9B20845EB7C62DA55ECCCE5536[$fieldName]['edithidden'] ==
 			 true) ? true : false;
 			$editrules['required'] = in_array(
-			$_84F8B7DFD0844468481F41C56E82DAB5, 
+			$fieldName, 
 			$this->_463514EB96C66C052BE91960E67E03BD);
 			if (isset(
-			$this->_0E9047E2507C69D9E1F52D2BFB452CEB[$_84F8B7DFD0844468481F41C56E82DAB5]))
+			$this->_0E9047E2507C69D9E1F52D2BFB452CEB[$fieldName]))
 			{
-				$editrules[$this->_0E9047E2507C69D9E1F52D2BFB452CEB[$_84F8B7DFD0844468481F41C56E82DAB5]] = true;
+				$editrules[$this->_0E9047E2507C69D9E1F52D2BFB452CEB[$fieldName]] = true;
 			}
 			else
 			{
@@ -285,75 +290,68 @@ class C_DataGrid
 						break;
 				}
 			}
-			if (isset($this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]))
+			if (isset($this->col_formats[$fieldName]))
 			{
-				if (isset(
-				$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['link']))
+				if (isset($this->col_formats[$fieldName]['link']))
 				{
 					$cols['formatter'] = 'link';
 					$formatoptions = array();
-					$formatoptions['target'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['link']['target'];
+					$formatoptions['target'] = $this->col_formats[$fieldName]['link']['target'];
 					$cols['formatoptions'] = $formatoptions;
 				}
-				elseif (isset(
-				$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['showlink']))
+				elseif (isset($this->col_formats[$fieldName]['showlink']))
 				{
 					$cols['formatter'] = 'showlink';
 					$formatoptions = array();
-					$formatoptions['baseLinkUrl'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['showlink']['baseLinkUrl'];
-					$formatoptions['idName'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['showlink']['idName'];
-					$formatoptions['addParam'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['showlink']['addParam'];
-					$formatoptions['target'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['showlink']['target'];
+					$formatoptions['baseLinkUrl'] = $this->col_formats[$fieldName]['showlink']['baseLinkUrl'];
+					$formatoptions['idName'] = $this->col_formats[$fieldName]['showlink']['idName'];
+					$formatoptions['addParam'] = $this->col_formats[$fieldName]['showlink']['addParam'];
+					$formatoptions['target'] = $this->col_formats[$fieldName]['showlink']['target'];
 					$cols['formatoptions'] = $formatoptions;
 				}
-				elseif (isset(
-				$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['image']))
+				elseif (isset($this->col_formats[$fieldName]['image']))
 				{
 					$cols['formatter'] = '###imageFormatter###';
 					$cols['unformat'] = '###imageUnformatter###';
 				}
-				elseif (isset(
-				$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['email']))
+				elseif (isset($this->col_formats[$fieldName]['email']))
 				{
 					$cols['formatter'] = 'email';
 				}
-				elseif (isset(
-				$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['integer']))
+				elseif (isset($this->col_formats[$fieldName]['integer']))
 				{
 					$cols['formatter'] = 'integer';
 					$formatoptions = array();
-					$formatoptions['thousandsSeparator'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['integer']['thousandsSeparator'];
-					$formatoptions['defaultValue'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['integer']['defaultValue'];
+					$formatoptions['thousandsSeparator'] = $this->col_formats[$fieldName]['integer']['thousandsSeparator'];
+					$formatoptions['defaultValue'] = $this->col_formats[$fieldName]['integer']['defaultValue'];
 					$cols['formatoptions'] = $formatoptions;
 				}
-				elseif (isset(
-				$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['number']))
+				elseif (isset($this->col_formats[$fieldName]['number']))
 				{
 					$cols['formatter'] = 'number';
 					$formatoptions = array();
-					$formatoptions['thousandsSeparator'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['number']['thousandsSeparator'];
-					$formatoptions['decimalSeparator'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['number']['decimalSeparator'];
-					$formatoptions['decimalPlaces'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['number']['decimalPlaces'];
-					$formatoptions['defaultValue'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['number']['defaultValue'];
+					$formatoptions['thousandsSeparator'] = $this->col_formats[$fieldName]['number']['thousandsSeparator'];
+					$formatoptions['decimalSeparator'] = $this->col_formats[$fieldName]['number']['decimalSeparator'];
+					$formatoptions['decimalPlaces'] = $this->col_formats[$fieldName]['number']['decimalPlaces'];
+					$formatoptions['defaultValue'] = $this->col_formats[$fieldName]['number']['defaultValue'];
 					$cols['formatoptions'] = $formatoptions;
 				}
-				elseif (isset(
-				$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency']))
+				elseif (isset($this->col_formats[$fieldName]['currency']))
 				{
 					$cols['formatter'] = 'currency';
 					$formatoptions = array();
-					$formatoptions['prefix'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency']['prefix'];
-					$formatoptions['suffix'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency']['suffix'];
-					$formatoptions['thousandsSeparator'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency']['thousandsSeparator'];
-					$formatoptions['decimalSeparator'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency']['decimalSeparator'];
-					$formatoptions['decimalPlaces'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency']['decimalPlaces'];
-					$formatoptions['defaultValue'] = $this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency']['defaultValue'];
+					$formatoptions['prefix'] = $this->col_formats[$fieldName]['currency']['prefix'];
+					$formatoptions['suffix'] = $this->col_formats[$fieldName]['currency']['suffix'];
+					$formatoptions['thousandsSeparator'] = $this->col_formats[$fieldName]['currency']['thousandsSeparator'];
+					$formatoptions['decimalSeparator'] = $this->col_formats[$fieldName]['currency']['decimalSeparator'];
+					$formatoptions['decimalPlaces'] = $this->col_formats[$fieldName]['currency']['decimalPlaces'];
+					$formatoptions['defaultValue'] = $this->col_formats[$fieldName]['currency']['defaultValue'];
 					$cols['formatoptions'] = $formatoptions;
 				}
 			}
 			elseif (isset(
-			$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]) &&
-			 ($this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['type'] ==
+			$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]) &&
+			 ($this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['type'] ==
 			 'select'))
 			{
 				$cols['formatter'] = 'select';
@@ -891,10 +889,9 @@ class C_DataGrid
 	{
 		return $this->_BA450DBC95C8EB73915BF54C1D1FB456;
 	}
-	public function set_col_hidden ($_84F8B7DFD0844468481F41C56E82DAB5, 
-	$edithidden = true)
+	public function set_col_hidden ($fieldName, $edithidden = true)
 	{
-		$this->_53C4CD9B20845EB7C62DA55ECCCE5536[$_84F8B7DFD0844468481F41C56E82DAB5]['edithidden'] = $edithidden;
+		$this->_53C4CD9B20845EB7C62DA55ECCCE5536[$fieldName]['edithidden'] = $edithidden;
 	}
 	public function _053D96FF84E696405652B917C760E4B4 ()
 	{
@@ -902,8 +899,7 @@ class C_DataGrid
 	}
 	public function set_col_readonly ($arr)
 	{
-		$this->_CFDCEF9F776D5B87B3AF7C273DB2A716 = preg_split("/[\s]*[,][\s]*/", 
-		$arr);
+		$this->_CFDCEF9F776D5B87B3AF7C273DB2A716 = preg_split("/[\s]*[,][\s]*/", $arr);
 	}
 	public function _F236608636824A1DDB93941911A32EA9 ()
 	{
@@ -977,48 +973,52 @@ class C_DataGrid
 		$this->_463514EB96C66C052BE91960E67E03BD = preg_split("/[\s]*[,][\s]*/", 
 		$arr);
 	}
-	public function set_col_title ($_84F8B7DFD0844468481F41C56E82DAB5, 
+	public function set_col_title ($fieldName, 
 	$_891F66958ACBF7F6C44AD3B2CFE70305)
 	{
-		$this->_CF0A584CDCFB7C5865C3C6807292530D[$_84F8B7DFD0844468481F41C56E82DAB5] = $_891F66958ACBF7F6C44AD3B2CFE70305;
+		$this->_CF0A584CDCFB7C5865C3C6807292530D[$fieldName] = $_891F66958ACBF7F6C44AD3B2CFE70305;
 	}
 	public function _251D1C1E959494F56D699E66F2C99EA0 ()
 	{
 		return $this->_CF0A584CDCFB7C5865C3C6807292530D;
 	}
-	public function set_col_link ($_84F8B7DFD0844468481F41C56E82DAB5, 
-	$target = "_new")
+	public function set_col_link ($fieldName, $target = "_new")
 	{
-		$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['link'] = array( 
+		$this->col_formats[$fieldName]['link'] = array( 
 		"target" => $target );
 	}
-	public function set_col_dynalink ($_84F8B7DFD0844468481F41C56E82DAB5, 
+	// added by solarisintel
+	public function set_col_align ($fieldName, $arg = "left")
+	{
+		$this->align[$fieldName] = $arg;
+	}
+	public function set_col_dynalink ($fieldName, 
 	$baseLinkUrl = "", $idName = "id", $addParam = "", $target = "_new")
 	{
-		$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['showlink'] = array( 
+		$this->col_formats[$fieldName]['showlink'] = array( 
 		"baseLinkUrl" => $baseLinkUrl , "idName" => $idName , 
 		"addParam" => $addParam , "target" => $target );
 	}
-	public function set_col_currency ($_84F8B7DFD0844468481F41C56E82DAB5, 
+	public function set_col_currency ($fieldName, 
 	$prefix = '$', $suffix = '', $thousandsSeparator = ',', $decimalSeparator = '.', 
 	$decimalPlaces = '2', $defaultValue = '0.00')
 	{
-		$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['currency'] = array( 
+		$this->col_formats[$fieldName]['currency'] = array( 
 		"prefix" => $prefix , "suffix" => $suffix , 
 		"thousandsSeparator" => $thousandsSeparator , 
 		"decimalSeparator" => $decimalSeparator , 
 		"decimalPlaces" => $decimalPlaces , "defaultValue" => $defaultValue );
 	}
-	public function set_col_img ($_84F8B7DFD0844468481F41C56E82DAB5, 
+	public function set_col_img ($fieldName, 
 	$addParma = '')
 	{
-		$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5]['image'] = array( 
+		$this->col_formats[$fieldName]['image'] = array( 
 		'addParma' => $addParma );
 	}
-	public function set_col_format ($_84F8B7DFD0844468481F41C56E82DAB5, $format, 
+	public function set_col_format ($fieldName, $format, 
 	$formatoptions = array())
 	{
-		$this->col_formats[$_84F8B7DFD0844468481F41C56E82DAB5][$format] = $formatoptions;
+		$this->col_formats[$fieldName][$format] = $formatoptions;
 	}
 	public function set_dimension ($w, $h = '100%')
 	{
@@ -1106,15 +1106,15 @@ class C_DataGrid
 	{
 		$this->_F0135D302285919E33CA08ACFA0822E5 = $type;
 	}
-	public function set_col_edittype ($_84F8B7DFD0844468481F41C56E82DAB5, 
+	public function set_col_edittype ($fieldName, 
 	$_7B0AC8BC8E0CB1A71CD6636A0B5B5E03, $_68F0263FE37025018006A99DECF5CFA7 = null, 
 	$multiple = false, $dataUrl = null, $extra_params = null)
 	{
-		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['type'] = $_7B0AC8BC8E0CB1A71CD6636A0B5B5E03;
-		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['value'] = $_68F0263FE37025018006A99DECF5CFA7;
-		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['multiple'] = $multiple;
-		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['dataUrl'] = $dataUrl;
-		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$_84F8B7DFD0844468481F41C56E82DAB5]['extra_params'] = $extra_params;
+		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['type'] = $_7B0AC8BC8E0CB1A71CD6636A0B5B5E03;
+		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['value'] = $_68F0263FE37025018006A99DECF5CFA7;
+		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['multiple'] = $multiple;
+		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['dataUrl'] = $dataUrl;
+		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['extra_params'] = $extra_params;
 	}
 	public function set_row_color ($_47668E423062F54EB58A265948DCD3D6, 
 	$_A424E4E08C62203CF27B38FB12D1BE0E = null, 

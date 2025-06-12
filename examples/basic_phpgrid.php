@@ -10,7 +10,7 @@ require_once("../conf.php");
 <body > 
 
 <?php
-$dg = new C_DataGrid("SELECT * FROM orders", "orderNumber", "orders");
+$dg = new C_DataGrid("SELECT * FROM Orders", "orderNumber", "Orders");
 
 $dg -> display();
 ?>

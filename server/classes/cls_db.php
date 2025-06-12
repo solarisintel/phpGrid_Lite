@@ -5,8 +5,8 @@ if (! session_id())
 }
 class C_Database
 {
-	public $_EA111FC288B46F7C89F82D6D216D62A6;
-	public $_A8CA282CA0B84C15FD52B637B16B6AC1;
+	public $hostName;
+	public $userName;
 	public $password;
 	public $databaseName;
 	public $tableName;
@@ -14,16 +14,17 @@ class C_Database
 	public $dbType;
 	public $db;
 	public $result;
-	public function __construct ($host, $user, $pass, $dbName, $db_type = "mysqli")
+//	public function __construct ($host, $user, $pass, $dbName, $db_type = "mysqli")
+	public function __construct ($host, $user, $pass, $dbName, $db_type = "postgres")
 	{
-		$this->_EA111FC288B46F7C89F82D6D216D62A6 = $host;
-		$this->_A8CA282CA0B84C15FD52B637B16B6AC1 = $user;
+		$this->hostName = $host;
+		$this->userName = $user;
 		$this->password = $pass;
 		$this->databaseName = $dbName;
 		$this->dbType = $db_type;
-		$this->_D3FBB0AEE9D0222FC0F9624B8E3CD0B0();
+		$this->Connect();
 	}
-	public function _D3FBB0AEE9D0222FC0F9624B8E3CD0B0 ()
+	public function Connect()
 	{
 		switch ($this->dbType)
 		{
@@ -31,59 +32,69 @@ class C_Database
 				$this->db = & ADONewConnection($this->dbType);
 				$dsn = "Driver={Microsoft Access Driver (*.mdb)};Dbq=" .
 				 $this->databaseName . ";Uid=" .
-				 $this->_A8CA282CA0B84C15FD52B637B16B6AC1 . ";Pwd=" .
+				 $this->userName . ";Pwd=" .
 				 $this->password . ";";
 				$this->db->Connect($dsn);
 				break;
 			case "odbc_mssql":
 				$this->db = & ADONewConnection($this->dbType);
 				$dsn = "Driver={SQL Server};Server=" .
-				 $this->_EA111FC288B46F7C89F82D6D216D62A6 . ";Database=" .
-				 $this->databaseName . ";";
+				$this->hostName . ";Database=" .
+				$this->databaseName . ";";
 				$this->db->Connect($dsn, 
-				$this->_A8CA282CA0B84C15FD52B637B16B6AC1, $this->password);
+				$this->userName, $this->password);
 				break;
 			case "postgres":
-				$this->db = &ADONewConnection($this->dbType);
-				$this->db->PConnect($this->_EA111FC288B46F7C89F82D6D216D62A6, 
-				$this->_A8CA282CA0B84C15FD52B637B16B6AC1, $this->password, 
-				$this->databaseName) or
-				 die("Error: Could not connect to the database");
+			        error_log('cls_db called type=postgres');
+				$this->db = ADONewConnection($this->dbType);
+				$this->db->Connect($this->hostName, $this->userName, $this->password, $this->databaseName);
+				if (!($this->db->isConnected())) {
+				    die("Error: Could not connect to the database");
+				}
 				break;
 			case "db2":
 				$this->db = & ADONewConnection($this->dbType);
 				$dsn = "driver={IBM db2 odbc DRIVER};Database=" .
 				 $this->databaseName . ";hostname=" .
-				 $this->_EA111FC288B46F7C89F82D6D216D62A6 .
+				 $this->hostName .
 				 ";port=50000;protocol=TCPIP;uid=" .
-				 $this->_A8CA282CA0B84C15FD52B637B16B6AC1 . "; pwd=" .
+				 $this->userName . "; pwd=" .
 				 $this->password;
 				$this->db->Connect($dsn);
 				break;
 			case "ibase":
 				$this->db = &ADONewConnection($this->dbType);
 				$this->db->PConnect(
-				$this->_EA111FC288B46F7C89F82D6D216D62A6 . $this->databaseName, 
-				$this->_A8CA282CA0B84C15FD52B637B16B6AC1, $this->password);
+				$this->hostName . $this->databaseName, 
+				$this->userName, $this->password);
 				break;
 			case "oci8":
 				$ret = $this->db->Connect(false, 
-				$this->_A8CA282CA0B84C15FD52B637B16B6AC1, $this->password);
+				$this->userName, $this->password);
 				if (! ret)
 				{
-					$this->db->Connect($this->_EA111FC288B46F7C89F82D6D216D62A6, 
-					$this->_A8CA282CA0B84C15FD52B637B16B6AC1, $this->password, 
+					$this->db->Connect($this->hostName, 
+					$this->userName, $this->password, 
 					$this->databaseName);
 				}
 				break;
 			case "sqlit":
 				break;
 			default:
+			        error_log('cls_db called default is postgres');
 				$this->db = ADONewConnection($this->dbType);
-				$this->db->PConnect($this->_EA111FC288B46F7C89F82D6D216D62A6, 
-				$this->_A8CA282CA0B84C15FD52B637B16B6AC1, $this->password, 
-				$this->databaseName) or
-				 die("Error: Could not connect to the database");
+				$this->db->Connect($this->hostName, $this->userName, $this->password, $this->databaseName);
+				if (!($this->db->isConnected())) {
+				    die("Error: Could not connect to the database");
+				}
+				break;
+			        //error_log('cls_db called default is mysqli');
+				//$this->db = ADONewConnection($this->dbType);
+				//$this->db->PConnect($this->hostName, 
+				//$this->userName, $this->password, 
+				//$this->databaseName) or
+				// die("Error: Could not connect to the database");
+				//break;
 		}
 	}
 	public function _5D7405D6C5BF206648C6B627A5415C96 (
@@ -205,15 +216,15 @@ class C_Database
 		return $type;
 	}
 	public function _527688ACBDB18AC292DF48188EBA0F54 ($table, 
-	$_84F8B7DFD0844468481F41C56E82DAB5)
+	$fieldName)
 	{
 		$arr = array();
 		$arr = $this->db->MetaColumns($table);
 		$_05485668FF1F9AF3E49F3672CEDBC092 = new ADOFieldObject();
-		if (isset($arr[strtoupper($_84F8B7DFD0844468481F41C56E82DAB5)]))
+		if (isset($arr[strtoupper($fieldName)]))
 		{
 			$_05485668FF1F9AF3E49F3672CEDBC092 = $arr[strtoupper(
-			$_84F8B7DFD0844468481F41C56E82DAB5)];
+			$fieldName)];
 			return $_05485668FF1F9AF3E49F3672CEDBC092;
 		}
 		else
