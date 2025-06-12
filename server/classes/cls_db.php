@@ -97,39 +97,34 @@ class C_Database
 				//break;
 		}
 	}
-	public function _5D7405D6C5BF206648C6B627A5415C96 (
-	$_5B25B739A25B02AA9FE14AB2C4C1F2AC)
+	public function executeQuery ($sqlQuery)
 	{
 		$this->db->SetFetchMode(ADODB_FETCH_BOTH);
-		$result = $this->db->Execute($_5B25B739A25B02AA9FE14AB2C4C1F2AC) or
+		$result = $this->db->Execute($sqlQuery) or
 		 die(
-		"Error: Could not execute query $_5B25B739A25B02AA9FE14AB2C4C1F2AC in _5D7405D6C5BF206648C6B627A5415C96()");
+		"Error: Could not execute query $sqlQuery in executeQuery()");
 		$this->result = $result;
 		return $result;
 	}
-	public function _8D00AB5DB4831EFB77B1B8B18367B560 (
-	$_5B25B739A25B02AA9FE14AB2C4C1F2AC, $size, 
-	$_7A8B0B41C5CC0667D3CAB83E9839548B)
+	public function selectLimit ($sqlQuery, $size, $offset)
 	{
-		$result = $this->db->SelectLimit($_5B25B739A25B02AA9FE14AB2C4C1F2AC, 
-		$size, $_7A8B0B41C5CC0667D3CAB83E9839548B) or
+		$result = $this->db->SelectLimit($sqlQuery, 
+		$size, $offset) or
 		 die(
-		"Error: Could not execute query $_5B25B739A25B02AA9FE14AB2C4C1F2AC in _8D00AB5DB4831EFB77B1B8B18367B560()");
+		"Error: Could not execute query $sqlQuery in selectLimit()");
 		$this->result = $result;
 		return $result;
 	}
-	public function _CF65857B18D40AF9F68FEA86C3AC1F99 (
-	$_5B25B739A25B02AA9FE14AB2C4C1F2AC, $size, 
-	$_7A8B0B41C5CC0667D3CAB83E9839548B)
+	public function selectLimitArray ($sqlQuery, $size, $offset)
 	{
-		$result = $this->_8D00AB5DB4831EFB77B1B8B18367B560(
-		$_5B25B739A25B02AA9FE14AB2C4C1F2AC, $size, 
-		$_7A8B0B41C5CC0667D3CAB83E9839548B);
-		$_CD2375731BEA046D1E12D4392A8F780A = $result->GetArray();
-		$this->result = $_CD2375731BEA046D1E12D4392A8F780A;
-		return $_CD2375731BEA046D1E12D4392A8F780A;
+		$result = $this->selectLimit(
+		$sqlQuery, $size, 
+		$offset);
+		$resultArray = $result->GetArray();
+		$this->result = $resultArray;
+		return $resultArray;
 	}
-	public function _A0CFF16BD277A6E46F895D35734C2608 (&$result)
+	public function FetchNum (&$result)
 	{
 		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 		if (! $result->EOF)
@@ -139,7 +134,7 @@ class C_Database
 			return $rs;
 		}
 	}
-	public function _10422478B283C25274BD1D27E2187580 (&$result)
+	public function FetchBoth (&$result)
 	{
 		$ADODB_FETCH_MODE = ADODB_FETCH_BOTH;
 		if (! $result->EOF)
@@ -149,7 +144,7 @@ class C_Database
 			return $rs;
 		}
 	}
-	public function _D9EBE5634F9E374610F5696C28C39F90 (&$result)
+	public function FetchAssoc (&$result)
 	{
 		$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 		if (! $result->EOF)
@@ -159,13 +154,12 @@ class C_Database
 			return $rs;
 		}
 	}
-	public function _B19E0CC1E2079FB5DE952A6CE31B63AE (
-	$_5B25B739A25B02AA9FE14AB2C4C1F2AC)
+	public function ExecuteFetchNum ($sqlQuery)
 	{
 		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
-		$result = $this->db->Execute($_5B25B739A25B02AA9FE14AB2C4C1F2AC) or
+		$result = $this->db->Execute($sqlQuery) or
 		 die(
-		"Error: Could not execute query $_5B25B739A25B02AA9FE14AB2C4C1F2AC");
+		"Error: Could not execute query $sqlQuery");
 		if (! $result->EOF)
 		{
 			$rs = $result->fields;
@@ -173,13 +167,12 @@ class C_Database
 			return $rs;
 		}
 	}
-	public function _DFDEB5E50F9BB3241F4AA85F8B5842C9 (
-	$_5B25B739A25B02AA9FE14AB2C4C1F2AC)
+	public function ExecuteFetchBoth ($sqlQuery)
 	{
 		$ADODB_FETCH_MODE = ADODB_FETCH_BOTH;
-		$result = $this->db->Execute($_5B25B739A25B02AA9FE14AB2C4C1F2AC) or
+		$result = $this->db->Execute($sqlQuery) or
 		 die(
-		"Error: Could not execute query $_5B25B739A25B02AA9FE14AB2C4C1F2AC");
+		"Error: Could not execute query $sqlQuery");
 		if (! $result->EOF)
 		{
 			$rs = $result->fields;
@@ -187,7 +180,7 @@ class C_Database
 			return $rs;
 		}
 	}
-	public function _5FBCF77932543542C23E5582BE5F980B ($result)
+	public function GetRecordCount ($result)
 	{
 		return $result->RecordCount();
 	}
@@ -197,56 +190,55 @@ class C_Database
 	}
 	public function field_name ($result, $index)
 	{
-		$_05485668FF1F9AF3E49F3672CEDBC092 = new ADOFieldObject();
-		$_05485668FF1F9AF3E49F3672CEDBC092 = $result->FetchField($index);
-		return isset($_05485668FF1F9AF3E49F3672CEDBC092->name) ? $_05485668FF1F9AF3E49F3672CEDBC092->name : "";
+		$filedObj = new ADOFieldObject();
+		$filedObj = $result->FetchField($index);
+		return isset($filedObj->name) ? $filedObj->name : "";
 	}
-	public function _B00D907EB327D2559A8F07F6C22B24EF ($result, $index)
+	public function field_type($result, $index)
 	{
-		$_05485668FF1F9AF3E49F3672CEDBC092 = new ADOFieldObject();
-		$_05485668FF1F9AF3E49F3672CEDBC092 = $result->FetchField($index);
-		return isset($_05485668FF1F9AF3E49F3672CEDBC092->type) ? $_05485668FF1F9AF3E49F3672CEDBC092->type : "";
+		$filedObj = new ADOFieldObject();
+		$filedObj = $result->FetchField($index);
+		return isset($filedObj->type) ? $filedObj->type : "";
 	}
-	public function _39ADD6B4099DB99B597E2C89CADDDFB3 ($result, $index)
+	public function meta_type ($result, $index)
 	{
-		$_05485668FF1F9AF3E49F3672CEDBC092 = new ADOFieldObject();
-		$_05485668FF1F9AF3E49F3672CEDBC092 = $result->FetchField($index);
-		$type = $result->MetaType($_05485668FF1F9AF3E49F3672CEDBC092->type, 
-		$_05485668FF1F9AF3E49F3672CEDBC092->max_length);
+		$filedObj = new ADOFieldObject();
+		$filedObj = $result->FetchField($index);
+		$type = $result->MetaType($filedObj->type, 
+		$filedObj->max_length);
 		return $type;
 	}
-	public function _527688ACBDB18AC292DF48188EBA0F54 ($table, 
-	$fieldName)
+	public function getMetaColumn ($table, 	$fieldName)
 	{
 		$arr = array();
 		$arr = $this->db->MetaColumns($table);
-		$_05485668FF1F9AF3E49F3672CEDBC092 = new ADOFieldObject();
+		$filedObj = new ADOFieldObject();
 		if (isset($arr[strtoupper($fieldName)]))
 		{
-			$_05485668FF1F9AF3E49F3672CEDBC092 = $arr[strtoupper(
+			$filedObj = $arr[strtoupper(
 			$fieldName)];
-			return $_05485668FF1F9AF3E49F3672CEDBC092;
+			return $filedObj;
 		}
 		else
 		{
 			return false;
 		}
 	}
-	public function _4CF52E24237F544BE9BC663B4DF0F9D7 ($result, $field_name)
+	public function getFieldIndexByName ($result, $field_name)
 	{
-		$_BF4AE0A9EAE89DBA07ED303E5FE7BC97 = $this->num_fields($result);
+		$fieldCount = $this->num_fields($result);
 		$i = 0;
-		for ($i = 0; $i < $_BF4AE0A9EAE89DBA07ED303E5FE7BC97; $i ++)
+		for ($i = 0; $i < $fieldCount; $i ++)
 		{
 			if ($field_name == $this->field_name($result, $i)) return $i;
 		}
 		return - 1;
 	}
-	public function _F177680CBF8EBA292F9FD0829C998D4E ($result, $index)
+	public function FieldMaxLength ($result, $index)
 	{
-		$_05485668FF1F9AF3E49F3672CEDBC092 = new ADOFieldObject();
-		$_05485668FF1F9AF3E49F3672CEDBC092 = $result->FetchField($index);
-		return isset($_05485668FF1F9AF3E49F3672CEDBC092->max_length) ? $_05485668FF1F9AF3E49F3672CEDBC092->max_length : "";
+		$filedObj = new ADOFieldObject();
+		$filedObj = $result->FetchField($index);
+		return isset($filedObj->max_length) ? $filedObj->max_length : "";
 	}
 }
 ?>

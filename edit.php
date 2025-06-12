@@ -22,17 +22,17 @@ $oper = isset($_POST['oper']) ? $_POST['oper'] : '';
 $_907AFA1F0B32542AC409662FBE610773 = '';
 if ($oper != '')
 {
-	$rs = $db->_8D00AB5DB4831EFB77B1B8B18367B560(
+	$rs = $db->selectLimit(
 	$dg->_821853BAB96B76F492924C9554DBDB09(), 1, 1);
 	foreach ($HTTP_POST_VARS as $key => $value)
 	{
 		if ($key != 'oper')
 		{
-			$_05485668FF1F9AF3E49F3672CEDBC092 = $db->_527688ACBDB18AC292DF48188EBA0F54(
+			$filedObj = $db->getMetaColumn(
 			$dg->_F79525D2A3E5C3B987B720F490E0071E(), $key);
-			if ($_05485668FF1F9AF3E49F3672CEDBC092)
+			if ($filedObj)
 			{
-				if (! $_05485668FF1F9AF3E49F3672CEDBC092->auto_increment)
+				if (! $filedObj->auto_increment)
 				{
 					$arrFields[$key] = $value;
 				}
@@ -44,8 +44,8 @@ if ($oper != '')
 		}
 	}
 	if ($dg->debug) print_r($arrFields);
-	$_F263E5B84D6C79F0B108E8DD213FE515 = $db->_39ADD6B4099DB99B597E2C89CADDDFB3(
-	$rs, $db->_4CF52E24237F544BE9BC663B4DF0F9D7($rs, $pk));
+	$_F263E5B84D6C79F0B108E8DD213FE515 = $db->meta_type(
+	$rs, $db->getFieldIndexByName($rs, $pk));
 	if ($dg->has_multiselect())
 	{
 		$_CF2853CDF6FA3C44681BA55ACC51A70F = explode(',', 
@@ -100,7 +100,7 @@ if ($oper != '')
 	}
 	if ($dg->debug) echo 'SQL: ' . $_907AFA1F0B32542AC409662FBE610773 .
 	 '<br /><br />';
-	if ($_907AFA1F0B32542AC409662FBE610773 != '') $db->_5D7405D6C5BF206648C6B627A5415C96(
+	if ($_907AFA1F0B32542AC409662FBE610773 != '') $db->executeQuery(
 	$_907AFA1F0B32542AC409662FBE610773);
 }
 $dg = null;

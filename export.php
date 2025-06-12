@@ -18,7 +18,7 @@ if ($_F0135D302285919E33CA08ACFA0822E5 == null)
 $sord = (isset($_GET['sord'])) ? $_GET['sord'] : 'asc';
 $sidx = (isset($_GET['sidx'])) ? $_GET['sidx'] : 1;
 if (! $sidx) $sidx = 1;
-$rs = $db->_8D00AB5DB4831EFB77B1B8B18367B560(
+$rs = $db->selectLimit(
 $dg->_821853BAB96B76F492924C9554DBDB09(), 1, 1);
 $_7B6C2BDBBD2AF03C64A520410964D2F2 = "";
 $_760EB019CDB8F62FF8AA9C0469129954 = ($_REQUEST['_search'] == 'true') ? true : false;
@@ -31,8 +31,8 @@ if ($_760EB019CDB8F62FF8AA9C0469129954)
 	{
 		if (in_array($key, $_67BACCE5E5580D4DF8F07E46F4F129B9))
 		{
-			$_F263E5B84D6C79F0B108E8DD213FE515 = $db->_39ADD6B4099DB99B597E2C89CADDDFB3(
-			$rs, $db->_4CF52E24237F544BE9BC663B4DF0F9D7($rs, $key));
+			$_F263E5B84D6C79F0B108E8DD213FE515 = $db->meta_type(
+			$rs, $db->getFieldIndexByName($rs, $key));
 			switch ($_F263E5B84D6C79F0B108E8DD213FE515)
 			{
 				case 'I':
@@ -53,8 +53,8 @@ if ($_760EB019CDB8F62FF8AA9C0469129954)
 $SQL = $dg->_821853BAB96B76F492924C9554DBDB09() .
  (($_760EB019CDB8F62FF8AA9C0469129954) ? ' WHERE 1=1 ' .
  $_7B6C2BDBBD2AF03C64A520410964D2F2 : '') . " ORDER BY $sidx $sord";
-$result = $db->_5D7405D6C5BF206648C6B627A5415C96($SQL);
-$_D78B63487076C8362C69E1F73F070780 = $db->_5FBCF77932543542C23E5582BE5F980B(
+$result = $db->executeQuery($SQL);
+$_D78B63487076C8362C69E1F73F070780 = $db->GetRecordCount(
 $result);
 $_F9EB1EE7430F1E455EDA156BED19DD68 = $db->num_fields($result);
 $_CF0A584CDCFB7C5865C3C6807292530D = array();
@@ -74,7 +74,7 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 		 "\n";
 		echo '<table border="1" cellspacing="0" cellpadding="2">' . "\n";
 		echo '<thead>' . "\n";
-		while ($row = $db->_D9EBE5634F9E374610F5696C28C39F90($rs))
+		while ($row = $db->FetchAssoc($rs))
 		{
 			echo '<tr style="background-color:black;color:white">';
 			for ($j = 0; $j < $db->num_fields($rs); $j ++)
@@ -101,7 +101,7 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 		}
 		echo '</thead>' . "\n";
 		echo '<tbody>' . "\n";
-		while ($row = $db->_D9EBE5634F9E374610F5696C28C39F90($result))
+		while ($row = $db->FetchAssoc($result))
 		{
 			echo '<tr>';
 			for ($j = 0; $j < $db->num_fields($result); $j ++)
@@ -180,7 +180,7 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 		 ($_D78B63487076C8362C69E1F73F070780 + 1) .
 		 '" x:FullColumns="1"
               x:FullRows="1">';
-		while ($row = $db->_D9EBE5634F9E374610F5696C28C39F90($rs))
+		while ($row = $db->FetchAssoc($rs))
 		{
 			echo '<Row>';
 			for ($j = 0; $j < $_F9EB1EE7430F1E455EDA156BED19DD68; $j ++)
@@ -210,7 +210,7 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 			echo '</Row>' . "\n";
 		}
 		$_F263E5B84D6C79F0B108E8DD213FE515 = 'C';
-		while ($row = $db->_D9EBE5634F9E374610F5696C28C39F90($result))
+		while ($row = $db->FetchAssoc($result))
 		{
 			echo '<Row>';
 			for ($j = 0; $j < $_F9EB1EE7430F1E455EDA156BED19DD68; $j ++)
@@ -220,9 +220,9 @@ switch ($_F0135D302285919E33CA08ACFA0822E5)
 				if (! in_array($fieldName, 
 				$dg->_053D96FF84E696405652B917C760E4B4()))
 				{
-					$_F263E5B84D6C79F0B108E8DD213FE515 = $db->_39ADD6B4099DB99B597E2C89CADDDFB3(
+					$_F263E5B84D6C79F0B108E8DD213FE515 = $db->meta_type(
 					$result, 
-					$db->_4CF52E24237F544BE9BC663B4DF0F9D7($result, 
+					$db->getFieldIndexByName($result, 
 					$fieldName));
 					switch ($_F263E5B84D6C79F0B108E8DD213FE515)
 					{

@@ -10,7 +10,9 @@ require_once("../conf.php");
 <body > 
 
 <?php
-$dg = new C_DataGrid("SELECT * FROM Orders", "orderNumber", "Orders");
+//$dg = new C_DataGrid("SELECT * FROM Orders", "orderNumber", "Orders");
+
+$dg = new C_DataGrid("SELECT * FROM Orders");
 
 $dg -> set_dimension(1500, 600); 
 
