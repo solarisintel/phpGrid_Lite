@@ -57,7 +57,7 @@ class C_DataGrid
 	private $_C3122687D6F8F4182585B45E0556A196;
 	private $_0E39904D7EB3B3A8DB174012714D2C0D;
 	private $_A80F62E0D0890FC5C6232BE28E3D5B48;
-	private $_F0A34FC9BB983B79191E27F561AF4CFD;
+	private $themaDirectory;
 	private $align;
 	private $colWidth;
 	public $_F0135D302285919E33CA08ACFA0822E5;
@@ -131,7 +131,7 @@ class C_DataGrid
 		$this->_E8844A2656AEE4F30B91D8B12F73F2DC = 'phpGrid Professional Demo(v4.0) jgGrid(v3.6.4) jQuery(v1.3.2) jQuery UI(1.7.3)';
 		$this->_0E39904D7EB3B3A8DB174012714D2C0D = null;
 		$this->_A80F62E0D0890FC5C6232BE28E3D5B48 = array();
-		$this->_F0A34FC9BB983B79191E27F561AF4CFD = 'start';
+		$this->themaDirectory = 'start';
 		$this->_F0135D302285919E33CA08ACFA0822E5 = null;
 		$this->_9285D3447B999C7A1BE3D673C80D0C94 = ABS_PATH . '/export.php?gn=' .
 		$this->_B5648762BE4E1F7296F7B5F857952DFA;
@@ -398,7 +398,7 @@ class C_DataGrid
 		if ($this->_00F02F1C04FD0E38007FE5C0ECE23227 == null)
 		{
 			echo '<link rel="stylesheet" type="text/css" media="screen" href="' .
-			 ABS_PATH . '/css/' . $this->_F0A34FC9BB983B79191E27F561AF4CFD .
+			 ABS_PATH . '/css/' . $this->themaDirectory .
 			 '/jquery-ui-1.7.3.custom.css" />' . "\n";
 			echo '<link rel="stylesheet" type="text/css" media="screen" href="' .
 			 ABS_PATH . '/css/ui.jqgrid.css" />' . "\n";
@@ -408,7 +408,7 @@ class C_DataGrid
 			 '/js/jquery-ui-1.7.3.custom.min.js" type="text/javascript"></script>' .
 			 "\n";
 			echo '<script src="' . ABS_PATH .
-			 '/js/i18n/grid.locale-en.js" type="text/javascript"></script>' .
+			 '/js/i18n/grid.locale-ja.js" type="text/javascript"></script>' .
 			 "\n";
 			echo '<script src="' . ABS_PATH .
 			 '/js/jquery.jqGrid.min.js" type="text/javascript"></script>' . "\n";
@@ -1125,34 +1125,32 @@ class C_DataGrid
 		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['dataUrl'] = $dataUrl;
 		$this->_3F2BE84D5FB33E471D0BAA66864E3074[$fieldName]['extra_params'] = $extra_params;
 	}
-	public function set_row_color ($_47668E423062F54EB58A265948DCD3D6, 
-	$_A424E4E08C62203CF27B38FB12D1BE0E = null, 
-	$_68B38E9808A9F63767D4AF4B20E19C8E = null)
+	public function set_row_color ($argHover, $argHighlight = null, $argAltrow = null)
 	{
-		$this->_A80F62E0D0890FC5C6232BE28E3D5B48['hover'] = $_47668E423062F54EB58A265948DCD3D6;
-		$this->_A80F62E0D0890FC5C6232BE28E3D5B48['highlight'] = $_A424E4E08C62203CF27B38FB12D1BE0E;
-		$this->_A80F62E0D0890FC5C6232BE28E3D5B48['altrow'] = $_68B38E9808A9F63767D4AF4B20E19C8E;
+		$this->_A80F62E0D0890FC5C6232BE28E3D5B48['hover'] = $argHover;
+		$this->_A80F62E0D0890FC5C6232BE28E3D5B48['highlight'] = $argHighlight;
+		$this->_A80F62E0D0890FC5C6232BE28E3D5B48['altrow'] = $argAltrow;
 	}
-	public function set_theme ($_1F1079690A790C4BB5FE5A7F819E3479)
+	public function set_theme ($arg)
 	{
-		$this->_F0A34FC9BB983B79191E27F561AF4CFD = $_1F1079690A790C4BB5FE5A7F819E3479;
+		$this->themaDirectory = $arg;
 	}
 	public function enable_debug ($debug)
 	{
 		$this->debug = $debug;
 		$this->db->db->debug = $debug;
 	}
-	public function set_caption ($_91E9EFA9DE29A9FD05C23D1ADE09FA07)
+	public function set_caption ($arg)
 	{
-		$this->_835FFBF31EE664AC75EE5415DFE1DF6C = $_91E9EFA9DE29A9FD05C23D1ADE09FA07;
+		$this->_835FFBF31EE664AC75EE5415DFE1DF6C = $arg;
 	}
-	public function set_pagesize ($_9EB1FB4CD5C9244B9C768ABEA4926A6E)
+	public function set_pagesize ($arg)
 	{
-		$this->_AA968E34A86116959AA1510193725726 = $_9EB1FB4CD5C9244B9C768ABEA4926A6E;
+		$this->_AA968E34A86116959AA1510193725726 = $arg;
 	}
-	public function enable_rownumbers ($_3F4679BADB741763A268DBDBAE252A3A)
+	public function enable_rownumbers ($arg)
 	{
-		$this->_E6838FCC20A0FEFC14AADA6D7EB86E2C = $_3F4679BADB741763A268DBDBAE252A3A;
+		$this->_E6838FCC20A0FEFC14AADA6D7EB86E2C = $arg;
 	}
 }
 ?>
